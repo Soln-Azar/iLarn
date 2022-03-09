@@ -10,7 +10,7 @@
 ## To get Started 
 
   ```
-  git remote add origin https://github.com/Soln-Azar/iLarn.git 
+  git clone https://github.com/Soln-Azar/iLarn.git 
   ```
  #
  ## Then run 
