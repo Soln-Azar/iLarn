@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878052120463",
+    "project_id": "ilearn-c8637",
+    "storage_bucket": "ilearn-c8637.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878052120463:android:f089e91d8f47dbe47c1dfa",
+        "android_client_info": {
+          "package_name": "com.example.ilearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878052120463-3tb9rrc9bi80853job591nc0edi88tgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3_NetHLpXpchLc-bUao6KX9mj_Cm3W9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878052120463-3tb9rrc9bi80853job591nc0edi88tgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
