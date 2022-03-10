@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ilearn/Global/constants.dart';
+import 'package:ilearn/Views/forgot/Forgot.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
@@ -22,13 +23,13 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
         GestureDetector(
           onTap: press,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? "Sign Up" : "Login In",
             style: const TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
-        )
+        ),
       ],
     );
   }

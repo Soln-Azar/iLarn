@@ -1,9 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ilearn/Global/Global.dart';
 import 'package:ilearn/Models/IntroModel.dart';
-import 'package:ilearn/Views/Auth/Login.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({Key? key}) : super(key: key);
@@ -18,7 +15,7 @@ class _IntroPageState extends State<IntroPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: size.width,
           height: double.infinity,
           child: Stack(

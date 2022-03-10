@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ilearn/Global/Global.dart';
 import 'package:ilearn/Global/constants.dart';
 import 'package:ilearn/Models/rounded_button.dart';
-import 'package:ilearn/Views/Auth/Login.dart';
 import 'package:ilearn/Views/Login/login_screen.dart';
 import 'package:ilearn/Views/Signup/signup_screen.dart';
 

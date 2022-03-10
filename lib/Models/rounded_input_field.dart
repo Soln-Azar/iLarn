@@ -16,7 +16,9 @@ class RoundedInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        validator: ((value) =>
+            value!.isNotEmpty ? null : "This field is required"),
         controller: controller,
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
