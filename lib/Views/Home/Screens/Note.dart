@@ -41,22 +41,25 @@ class _NoteState extends State<Note> {
       backgroundColor: Colors.transparent,
       body: StreamBuilder(
         stream: store.snapshots(),
-        builder: ((context, snapshot) {
+        builder: ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             // ignore: curly_braces_in_flow_control_structures
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
-          return const NoRecord();
-          // return snapshot.hasData
-          //     ? ListView.builder(
-          //         itemBuilder: (context, index) {
-          //           return const Card(
-          //             child: ListTile(title: Text("data")),
-          //           );
-          //         },
-          //       )
-          //     : const NoRecord();
+          // return const NoRecord();
+          return snapshot.hasData
+              ? ListView(
+                  children: snapshot.data!.docs
+                      .map((doc) => Card(
+                            child: ListTile(
+                              title: Text(
+                                doc.get('title'),
+                              ),
+                            ),
+                          ))
+                      .toList())
+              : const NoRecord();
         }),
       ),
       floatingActionButton: FloatingActionButton.extended(
