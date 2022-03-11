@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ilearn/Global/constants.dart';
 
 import 'package:ilearn/Views/Home/Models/round_btn.dart';
@@ -35,6 +34,7 @@ class _NoteState extends State<Note> {
   Widget build(BuildContext context) {
     CollectionReference<Map<String, dynamic>> store =
         FirebaseFirestore.instance.collection(doc.toString());
+    // ignore: unused_local_variable
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(

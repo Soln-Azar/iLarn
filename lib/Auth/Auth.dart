@@ -56,9 +56,9 @@ class Auth {
   }
 
   /// Store user records
-  CollectionReference<Map<String, dynamic>> storeSession(String record) {
+  CollectionReference<Map<String, dynamic>> storeSession(String? record) {
     /// handle online record storage
-    return FirebaseFirestore.instance.collection(record);
+    return FirebaseFirestore.instance.collection(record!);
   }
 
   /// handle Errors
