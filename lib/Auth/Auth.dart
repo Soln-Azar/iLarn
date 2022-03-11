@@ -4,13 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ilearn/Models/Users.dart';
+import 'package:ilearn/Views/Login/login_screen.dart';
 
 class Auth {
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  /// handle online record storage
-  CollectionReference<Map<String, dynamic>> store =
-      FirebaseFirestore.instance.collection("records");
 
   /// Creating a user account
   Future<UserCredential> createAccount(Users user) async {
@@ -29,13 +26,21 @@ class Auth {
   }
 
   /// SignOut user
-  Future<void> logoutUser() async {
-    await auth.signOut();
+  Future<void> logoutUser(BuildContext context) async {
+    await auth.signOut().whenComplete(
+          () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: ((context) => const LoginScreen()),
+            ),
+          ),
+        );
+    // notifyListeners();
   }
 
   /// Checks if user is logged in or not
   bool isSignedIn() {
-    return auth.currentUser!.isAnonymous;
+    return auth.currentUser?.email == null;
   }
 
   /// Password reset
@@ -51,9 +56,9 @@ class Auth {
   }
 
   /// Store user records
-  void storeSession(Map record, BuildContext context) {
-    // store.add();
-    showMessage("message", context);
+  CollectionReference<Map<String, dynamic>> storeSession(String record) {
+    /// handle online record storage
+    return FirebaseFirestore.instance.collection(record);
   }
 
   /// handle Errors

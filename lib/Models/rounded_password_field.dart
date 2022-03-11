@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ilearn/Global/constants.dart';
 import 'package:ilearn/Models/text_field_container.dart';
 
-class RoundedPasswordField extends StatelessWidget {
+class RoundedPasswordField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   const RoundedPasswordField({
@@ -12,22 +12,39 @@ class RoundedPasswordField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<RoundedPasswordField> createState() {
+    return RoundedPasswordFieldState();
+  }
+}
+
+class RoundedPasswordFieldState extends State<RoundedPasswordField> {
+  bool passHide = true;
+  @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        obscureText: true,
+        controller: widget.controller,
+        obscureText: passHide ? true : false,
         validator: ((value) =>
             value!.isNotEmpty ? null : "This field is required"),
         cursorColor: kPrimaryColor,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintText: hintText,
+          hintText: widget.hintText,
           icon: const Icon(
             Icons.lock,
             color: kPrimaryColor,
           ),
-          suffixIcon: const Icon(
-            Icons.visibility,
+          suffixIcon: IconButton(
+            /**Icons.visibility */
             color: kPrimaryColor,
+            icon: Icon(
+                passHide ? Icons.visibility : Icons.visibility_off_rounded),
+            onPressed: () {
+              setState(() {
+                passHide = !passHide;
+              });
+            },
           ),
           border: InputBorder.none,
         ),

@@ -9,7 +9,8 @@ import 'package:ilearn/Models/already_have_an_account_acheck.dart';
 import 'package:ilearn/Models/rounded_button.dart';
 import 'package:ilearn/Models/rounded_input_field.dart';
 import 'package:ilearn/Models/rounded_password_field.dart';
-import 'package:ilearn/Views/Home.dart';
+import 'package:ilearn/Views/Home/Home.dart';
+
 import 'package:ilearn/Views/Login/components/background.dart';
 import 'package:ilearn/Views/Signup/signup_screen.dart';
 import 'package:ilearn/Views/forgot/Forgot.dart';
@@ -59,18 +60,25 @@ class Body extends StatelessWidget {
                   Auth auth = Auth();
                   if (formkey.currentState!.validate()) {
                     try {
-                      auth.userLogin(
+                      auth
+                          .userLogin(
                         Users(
                           email: emailController.text,
                           password: passwordController.text,
                         ),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => Home()),
-                        ),
-                      );
+                      )
+                          .then(
+                              (value) => value.user?.email == null
+                                  ? null
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: ((context) => const Home()),
+                                      ),
+                                    ), onError: (error) {
+                        Auth().showMessage(error, context);
+                      });
+
                       // ignore: empty_catches
                     } on FirebaseAuthException catch (_, e) {
                       auth.showMessage(_.code, context);

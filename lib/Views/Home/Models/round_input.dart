@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ilearn/Global/constants.dart';
 import 'package:ilearn/Models/text_field_container.dart';
 
-class RoundedInputField extends StatelessWidget {
+class RoundedInput extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final TextEditingController controller;
-  const RoundedInputField({
+  const RoundedInput({
     Key? key,
     required this.hintText,
-    this.icon = Icons.person,
+    this.icon = Icons.note,
     required this.controller,
   }) : super(key: key);
 
