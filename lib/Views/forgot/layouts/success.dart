@@ -22,6 +22,14 @@ class Success extends StatelessWidget {
               height: size.height * 0.35,
             ),
             SizedBox(height: size.height * 0.03),
+            Text(
+              "You can check your email..",
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                    color: kPrimaryColor,
+                    fontSize: 18,
+                  ),
+            ),
+            SizedBox(height: size.height * 0.03),
             RoundedButton(
               text: "BACK TO LOGIN",
               press: () {

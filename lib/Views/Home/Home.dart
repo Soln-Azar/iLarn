@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
           pageController.animateToPage(
             selectedPage,
             duration: const Duration(milliseconds: 450),
-            curve: Curves.easeInCubic,
+            curve: Curves.elasticOut,
           );
         },
         items: const [

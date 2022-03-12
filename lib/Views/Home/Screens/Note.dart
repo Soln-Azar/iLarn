@@ -32,35 +32,86 @@ class _NoteState extends State<Note> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore db = FirebaseFirestore.instance;
     CollectionReference<Map<String, dynamic>> store =
         FirebaseFirestore.instance.collection(doc.toString());
+    //     ;
     // ignore: unused_local_variable
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: StreamBuilder(
-        stream: store.snapshots(),
-        builder: ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            // ignore: curly_braces_in_flow_control_structures
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          // return const NoRecord();
-          return snapshot.hasData
-              ? ListView(
-                  children: snapshot.data!.docs
-                      .map((doc) => Card(
-                            child: ListTile(
-                              title: Text(
-                                doc.get('title'),
-                              ),
+      backgroundColor: kPrimaryColor,
+      appBar: AppBar(
+        leading: const Text(""),
+        centerTitle: true,
+        toolbarHeight: size.height / 7,
+        titleTextStyle: const TextStyle(fontSize: 24),
+        title: const Text("Available Notes"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          color: Colors.white,
+        ),
+        child: StreamBuilder(
+          stream: store.snapshots(),
+          builder: ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            var document = snapshot.data?.docs;
+            if (snapshot.connectionState == ConnectionState.waiting)
+              // ignore: curly_braces_in_flow_control_structures
+              return Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height / 3),
+                    const CircularProgressIndicator.adaptive(),
+                    SizedBox(height: size.height * 0.03),
+                    const Text("Fetching your saved records.. Please wait"),
+                    SizedBox(height: size.height * 0.03),
+                  ],
+                ),
+              );
+            // return const NoRecord();
+            return snapshot.data!.docs.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      itemCount: document!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          elevation: 2.6,
+                          child: ListTile(
+                            onTap: () =>
+                                displayDetails(document[index].get('note')),
+                            trailing: IconButton(
+                              onPressed: () {
+                                db.runTransaction(
+                                    (Transaction myTransaction) async {
+                                  myTransaction
+                                      .delete(document[index].reference);
+                                });
+                              },
+                              icon: const Icon(Icons.delete_rounded),
                             ),
-                          ))
-                      .toList())
-              : const NoRecord();
-        }),
+                            title: Text(
+                              document[index].get('title'),
+                            ),
+                            subtitle: Text(
+                              document[index].get('note'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : const NoRecord();
+          }),
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: kPrimaryColor,
@@ -69,6 +120,41 @@ class _NoteState extends State<Note> {
         label: const Text("Add Note"),
       ),
     );
+  }
+
+  displayDetails(String data) {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          Size size = MediaQuery.of(context).size;
+          return BottomSheet(
+              backgroundColor: Colors.transparent,
+              onClosing: () {},
+              builder: (context) {
+                return Container(
+                  width: size.width,
+                  height: size.height,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: Colors.white,
+                  ),
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Align(
+                          child: Text(data),
+                          alignment: Alignment.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+        });
   }
 
   displayOptions() {

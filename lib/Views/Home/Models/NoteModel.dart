@@ -8,10 +8,10 @@ class NoteModel {
   final String message;
   NoteModel({required this.message, required this.title});
 
-  saveToCloud(BuildContext context) {
+  saveToCloud(BuildContext context, int i) {
     FirebaseAuth auth = FirebaseAuth.instance;
     var cloudStore = Auth().storeSession(auth.currentUser!.email);
-    cloudStore.add({'title': title, 'note': message}).whenComplete(
+    cloudStore.add({'title': title, 'note': message, 'uid': i}).whenComplete(
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: ((context) => const Home()),

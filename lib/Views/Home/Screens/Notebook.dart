@@ -75,8 +75,12 @@ class _NoteBookState extends State<NoteBook> {
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: kPrimaryColor,
           onPressed: () {
+            int id = 0;
+            setState(() {
+              id += 1;
+            });
             NoteModel(message: notedController.text, title: widget.noteTitle)
-                .saveToCloud(context);
+                .saveToCloud(context, id);
           },
           icon: const Icon(Icons.check),
           label: const Text("Save"),

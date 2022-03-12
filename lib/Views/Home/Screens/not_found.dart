@@ -12,7 +12,7 @@ class NoRecord extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: size.height / 5,
+            height: size.height / 6,
           ),
           SvgPicture.asset(
             "images/doc.svg",
