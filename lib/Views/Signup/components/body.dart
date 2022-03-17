@@ -38,33 +38,12 @@ class BodyState extends State<Body> {
         print("${passwordController.text} - ${emailController.text}");
       }
       try {
-        auth
-            .createAccount(
-              Users(
-                email: emailController.text,
-                password: passwordController.text,
-              ),
-            )
-            .whenComplete(
-              () => ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  // animation: ,
-                  behavior: SnackBarBehavior.floating,
-                  content: Text(
-                      "${emailController.text} has been registered successfully."),
-                ),
-              ),
-            )
-            .then(
-              (value) => value.user?.email == null
-                  ? setState(() => errorMsg = true)
-                  : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const Home()),
-                      ),
-                    ),
-            );
+        auth.createAccount(
+            Users(
+              email: emailController.text,
+              password: passwordController.text,
+            ),
+            context);
       } on FirebaseAuthException catch (_) {
         auth.showMessage(_.code, context);
       }

@@ -64,7 +64,7 @@ class LayoutForgotScreen extends StatelessWidget {
                           );
                     }
                   } on FirebaseAuthException catch (e) {
-                    Auth().handleErrors(e.code, context);
+                    Auth().showMessage(e.code, context);
                   }
                 },
                 color: kPrimaryColor,

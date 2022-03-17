@@ -13,10 +13,18 @@ class Capture extends StatefulWidget {
 class _CaptureState extends State<Capture> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      body: const Center(
         child: Text(
-          "Capture question",
+          "Scan a document here",
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        onPressed: () {},
+        child: const Icon(
+          Icons.camera,
         ),
       ),
     );

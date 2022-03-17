@@ -31,8 +31,8 @@ class _HomeState extends State<Home> {
 
   List<Widget> pages = [
     const Note(),
-    const Capture(),
     const RecordSession(),
+    const Capture(),
     Profile()
   ];
   Auth logout = Auth();
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
           pageController.animateToPage(
             selectedPage,
             duration: const Duration(milliseconds: 450),
-            curve: Curves.elasticOut,
+            curve: Curves.bounceOut,
           );
         },
         items: const [

@@ -60,24 +60,12 @@ class Body extends StatelessWidget {
                   Auth auth = Auth();
                   if (formkey.currentState!.validate()) {
                     try {
-                      auth
-                          .userLogin(
-                        Users(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ),
-                      )
-                          .then(
-                              (value) => value.user?.email == null
-                                  ? null
-                                  : Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: ((context) => const Home()),
-                                      ),
-                                    ), onError: (error) {
-                        Auth().showMessage(error, context);
-                      });
+                      auth.userLogin(
+                          Users(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ),
+                          context);
 
                       // ignore: empty_catches
                     } on FirebaseAuthException catch (_, e) {
