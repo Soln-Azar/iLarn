@@ -53,7 +53,7 @@ android {
     }
 android{
     defaultConfig{
-        minSdkVersion 20
+        minSdkVersion 21
     }
 }
     buildTypes {

@@ -10,7 +10,6 @@ import 'package:ilearn/Models/already_have_an_account_acheck.dart';
 import 'package:ilearn/Models/rounded_button.dart';
 import 'package:ilearn/Models/rounded_input_field.dart';
 import 'package:ilearn/Models/rounded_password_field.dart';
-import 'package:ilearn/Views/Home/Home.dart';
 
 import 'package:ilearn/Views/Login/login_screen.dart';
 import 'package:ilearn/Views/Signup/components/background.dart';
