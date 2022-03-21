@@ -32,9 +32,7 @@ class _CaptureState extends State<Capture> {
   }
 
   processImageFromGallery() async {
-    setState(() {
-      togglePicker = !togglePicker;
-    });
+    Navigator.of(context).pop();
     var pickImage =
         // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(
@@ -51,6 +49,8 @@ class _CaptureState extends State<Capture> {
   }
 
   processImageFromCamera() async {
+    Navigator.of(context).pop();
+
     var pickImage =
         // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(
@@ -66,6 +66,8 @@ class _CaptureState extends State<Capture> {
     });
   }
 
+  processTextForResults() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +79,10 @@ class _CaptureState extends State<Capture> {
                   Padding(
                     padding: const EdgeInsets.all(28.0),
                     child: SizedBox(
-                        width: double.infinity,
-                        height: 400,
-                        child: Image.file(image!)),
+                      width: double.infinity,
+                      height: 400,
+                      child: Card(child: Image.file(image!)),
+                    ),
                   ),
                   Text(processedText),
                 ],
@@ -107,6 +110,7 @@ class _CaptureState extends State<Capture> {
             onClosing: () {},
             builder: (context) {
               return Container(
+                height: MediaQuery.of(context).size.height / 4,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -116,8 +120,10 @@ class _CaptureState extends State<Capture> {
                 ),
                 child: ListView(
                   children: [
+                    const Divider(),
                     ListTile(
                       leading: const CircleAvatar(
+                        backgroundColor: kPrimaryColor,
                         child: Icon(Icons.browse_gallery_rounded),
                       ),
                       title: const Text("Pick from gallery"),
@@ -126,6 +132,7 @@ class _CaptureState extends State<Capture> {
                     const Divider(),
                     ListTile(
                       leading: const CircleAvatar(
+                        backgroundColor: kPrimaryColor,
                         child: Icon(Icons.camera),
                       ),
                       title: const Text("Pick from camera"),

@@ -3,7 +3,6 @@ import 'package:ilearn/Views/Settings/Screens/SetBody.dart';
 
 class Settngs extends StatefulWidget {
   const Settngs({Key? key}) : super(key: key);
-
   @override
   State<Settngs> createState() => _SettngsState();
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ilearn/Auth/Auth.dart';
 import 'package:ilearn/Global/constants.dart';
 import 'package:ilearn/Views/Home/Screens/Capture.dart';
+import 'package:ilearn/Views/Home/Screens/ImageProsess.dart';
 import 'package:ilearn/Views/Home/Screens/Note.dart';
 import 'package:ilearn/Views/Home/Screens/Profile.dart';
 import 'package:ilearn/Views/Home/Screens/record.dart';
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
   List<Widget> pages = [
     const Note(),
     const RecordSession(),
-    const Capture(),
+    const ImageCropper(),
     Profile()
   ];
   Auth logout = Auth();

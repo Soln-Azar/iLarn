@@ -45,6 +45,7 @@ dependencies:
   google_ml_kit: ^0.7.3
   image_picker_for_web: ^2.1.6
   hive: ^2.0.6
+  image_crop: ^0.4.0
 
 dev_dependencies:
   flutter_test:
