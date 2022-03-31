@@ -52,13 +52,14 @@ class _RecordSessionState extends State<RecordSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Speech Demo'),
-      // ),
+      
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 0.2,
+            ),
             Container(
               padding: const EdgeInsets.all(16),
               child: const Text(
