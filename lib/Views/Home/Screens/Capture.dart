@@ -48,76 +48,81 @@ class _CaptureState extends State<Capture> {
     return Scaffold(
       body: Center(
         // ignore: unnecessary_null_comparison
-        child: widget.result == null
-            ? const Text("No image scanned")
-            : FutureBuilder(
-                future: processScaned(),
-                builder: ((context, snapshot) {
-                  return snapshot.connectionState == ConnectionState.waiting
-                      ? Padding(
-                          padding: const EdgeInsets.all(38.0),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: mediaScreen.height / 3,
-                                ),
-                                const Align(
-                                    alignment: Alignment.center,
-                                    child:
-                                        CircularProgressIndicator.adaptive()),
-                                SizedBox(height: mediaScreen.height * 0.03),
-                                const Center(
-                                  child: Text("Loading......"),
-                                )
-                              ],
+        child: FutureBuilder(
+          future: processScaned(),
+          builder: ((context, snapshot) {
+            return snapshot.hasError
+                ? Padding(
+                    padding: const EdgeInsets.all(38.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: mediaScreen.height / 3,
+                          ),
+                          const Align(
+                              alignment: Alignment.center,
+                              child: CircularProgressIndicator.adaptive()),
+                          SizedBox(height: mediaScreen.height * 0.03),
+                          const Center(
+                            child: Text("Loading......"),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OrDivider(
+                          label: 'Cropped Image',
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: Container(
+                            width: mediaScreen.width,
+                            height: mediaScreen.height / 2.3,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                              ),
+                              image: DecorationImage(
+                                image: FileImage(widget.result),
+                              ),
                             ),
                           ),
-                        )
-                      : ListView(
-                          children: [
-                            Padding(
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OrDivider(
+                          label: 'Scanned Results',
+                        ),
+                      ),
+                      SizedBox(
+                        height: mediaScreen.height / 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                child: Container(
-                                  width: mediaScreen.width,
-                                  height: mediaScreen.height / 2.3,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                    ),
-                                    image: DecorationImage(
-                                      image: FileImage(widget.result),
-                                    ),
-                                  ),
-                                ),
+                              child: SingleChildScrollView(
+                                child: Text('${snapshot.data}'),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: OrDivider(),
-                            ),
-                            SizedBox(
-                              height: mediaScreen.height / 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SingleChildScrollView(
-                                      child: Text('${snapshot.data}'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                }),
-              ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+          }),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton.extended(

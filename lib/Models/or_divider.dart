@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ilearn/Global/constants.dart';
 
 class OrDivider extends StatelessWidget {
-  const OrDivider({Key? key}) : super(key: key);
+  String label;
+  OrDivider({Key? key, required this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,11 @@ class OrDivider extends StatelessWidget {
       child: Row(
         children: <Widget>[
           buildDivider(),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              "Scanned Results",
-              style: TextStyle(
+              label,
+              style: const TextStyle(
                 color: kPrimaryColor,
                 fontWeight: FontWeight.w600,
               ),

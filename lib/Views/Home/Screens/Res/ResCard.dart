@@ -18,38 +18,47 @@ class _RescardState extends State<Rescard> {
       mainAxisSpacing: 2,
       children: List.generate(
         t.length,
-        (index) => Card(
-          child: GridTile(
-            child: Column(
-              children: [
-                Text(
-                  "${t[index]['title']}",
-                  style: const TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Text(
-                    "${t[index]['snippet']}",
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300,
+        (index) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            child: GridTile(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${t[index]['title']}",
+                      style: const TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            footer: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                onPressed: () => _launchInBrowser(t[index]['link']),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.remove_red_eye_rounded),
-                    Text("View more"),
-                  ],
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "${t[index]['snippet']}",
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              footer: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  onPressed: () => _launchInBrowser(t[index]['link']),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.remove_red_eye_rounded),
+                      Text("View more"),
+                    ],
+                  ),
                 ),
               ),
             ),

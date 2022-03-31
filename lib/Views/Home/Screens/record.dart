@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilearn/Global/constants.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -53,7 +54,7 @@ class _RecordSessionState extends State<RecordSession> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: MediaQuery.of(context).size.height / 0.2,
+              height: MediaQuery.of(context).size.height / 3,
             ),
             Container(
               padding: const EdgeInsets.all(16),
@@ -69,10 +70,6 @@ class _RecordSessionState extends State<RecordSession> {
                   // If listening is active show the recognized words
                   _speechToText.isListening
                       ? _lastWords
-                      // If listening isn't active but could be tell the user
-                      // how to start it, otherwise indicate that speech
-                      // recognition is not yet ready or not supported on
-                      // the target device
                       : _speechEnabled
                           ? 'Tap the microphone to start listening...'
                           : 'Speech not available',
@@ -82,8 +79,9 @@ class _RecordSessionState extends State<RecordSession> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
         onPressed:
             // If not yet listening for speech start, otherwise stop
             _speechToText.isNotListening ? _startListening : _stopListening,
