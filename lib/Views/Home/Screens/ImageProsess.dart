@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:ilearn/Global/constants.dart';
+import 'package:ilearn/Views/Home/Screens/Capture.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_crop/image_crop.dart';
 
@@ -12,6 +15,8 @@ class ImageCropper extends StatefulWidget {
 }
 
 class _ImageCropperState extends State<ImageCropper> {
+  File? image;
+  
   final cropKey = GlobalKey<CropState>();
   File? _file;
   File? _sample;
@@ -27,12 +32,11 @@ class _ImageCropperState extends State<ImageCropper> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
+    return Scaffold(
+      // backgroundColor: Colors.black,
+      body: SafeArea(
         child: Container(
-          color: Colors.black,
-          padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
           child: _sample == null ? _buildOpeningImage() : _buildCroppingImage(),
         ),
       ),
@@ -40,14 +44,24 @@ class _ImageCropperState extends State<ImageCropper> {
   }
 
   Widget _buildOpeningImage() {
-    return Center(child: _buildOpenImage());
+    return Center(
+      child: FloatingActionButton.extended(
+        backgroundColor: kPrimaryColor,
+        label: const Text("Pick image"),
+        onPressed: () => showImageSettings(),
+        icon: const Icon(
+          Icons.camera,
+        ),
+      ),
+    );
   }
 
   Widget _buildCroppingImage() {
     return Column(
       children: <Widget>[
         Expanded(
-          child: Crop.file(_sample!, key: cropKey),
+          flex:2,
+          child: Crop.file(_sample!, key: cropKey,aspectRatio:1,),
         ),
         Container(
           padding: const EdgeInsets.only(top: 20.0),
@@ -55,17 +69,23 @@ class _ImageCropperState extends State<ImageCropper> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              TextButton(
+              OutlinedButton(
+                style:ButtonStyle(
+                  foregroundColor:MaterialStateProperty.all(kPrimaryColor
+                  ),
+                  padding:MaterialStateProperty.all(const EdgeInsets.all(2)),
+                  fixedSize:MaterialStateProperty.all(const Size(200,50))
+                ),
                 child: Text(
                   'Crop Image',
                   style: Theme.of(context)
                       .textTheme
                       .button!
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: Colors.black,fontSize:19,),
                 ),
                 onPressed: () => _cropImage(),
               ),
-              _buildOpenImage(),
+  
             ],
           ),
         )
@@ -73,21 +93,31 @@ class _ImageCropperState extends State<ImageCropper> {
     );
   }
 
-  Widget _buildOpenImage() {
-    return TextButton(
-      child: Text(
-        'Open Image',
-        style:
-            Theme.of(context).textTheme.button!.copyWith(color: Colors.white),
-      ),
-      onPressed: () => _openImage(),
-    );
-  }
-
   Future<void> _openImage() async {
+    Navigator.of(context).pop();
     final pickedFile =
         // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+    final file = File(pickedFile!.path);
+    final sample = await ImageCrop.sampleImage(
+      file: file,
+      preferredSize: context.size!.longestSide.ceil(),
+    );
+
+    setState(() {
+      _sample = sample;
+      _file = file;
+    });
+  }
+
+  
+
+  /// capture image from camera
+  Future<void> _captureImage() async {
+    Navigator.of(context).pop();
+    final pickedFile =
+        // ignore: invalid_use_of_visible_for_testing_member
+        await ImagePicker.platform.pickImage(source: ImageSource.camera);
     final file = File(pickedFile!.path);
     final sample = await ImageCrop.sampleImage(
       file: file,
@@ -127,7 +157,62 @@ class _ImageCropperState extends State<ImageCropper> {
 
     _lastCropped?.delete();
     _lastCropped = file;
-
+    if (file != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => Capture(
+            result: file,
+          ),
+        ),
+      );
+    }
     debugPrint('$file');
+  }
+
+  void showImageSettings() {
+    showModalBottomSheet(
+        isScrollControlled: false,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            backgroundColor: Colors.transparent,
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                height: MediaQuery.of(context).size.height / 4,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: ListView(
+                  children: [
+                    const Divider(),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(Icons.browse_gallery_rounded),
+                      ),
+                      title: const Text("Pick from gallery"),
+                      onTap: () => _openImage(),
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(Icons.camera),
+                      ),
+                      title: const Text("Pick from camera"),
+                      onTap: () => _captureImage(),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 }
