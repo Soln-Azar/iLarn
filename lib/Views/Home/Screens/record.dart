@@ -32,10 +32,6 @@ class _RecordSessionState extends State<RecordSession> {
     setState(() {});
   }
 
-  /// Manually stop the active speech recognition session
-  /// Note that there are also timeouts that each platform enforces
-  /// and the SpeechToText plugin supports setting timeouts on the
-  /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
     setState(() {});
@@ -52,9 +48,6 @@ class _RecordSessionState extends State<RecordSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Speech Demo'),
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +65,7 @@ class _RecordSessionState extends State<RecordSession> {
                 child: Text(
                   // If listening is active show the recognized words
                   _speechToText.isListening
-                      ? '$_lastWords'
+                      ? _lastWords
                       // If listening isn't active but could be tell the user
                       // how to start it, otherwise indicate that speech
                       // recognition is not yet ready or not supported on
@@ -86,6 +79,7 @@ class _RecordSessionState extends State<RecordSession> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed:
             // If not yet listening for speech start, otherwise stop

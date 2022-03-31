@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ilearn/Auth/Auth.dart';
 import 'package:ilearn/Global/constants.dart';
-import 'package:ilearn/Views/Home/Screens/Capture.dart';
 import 'package:ilearn/Views/Home/Screens/ImageProsess.dart';
 import 'package:ilearn/Views/Home/Screens/Note.dart';
 import 'package:ilearn/Views/Home/Screens/Profile.dart';
@@ -34,7 +33,7 @@ class _HomeState extends State<Home> {
     const Note(),
     const RecordSession(),
     const ImageCropper(),
-    Profile()
+    const Profile()
   ];
   Auth logout = Auth();
 
@@ -59,7 +58,7 @@ class _HomeState extends State<Home> {
           pageController.animateToPage(
             selectedPage,
             duration: const Duration(milliseconds: 450),
-            curve: Curves.bounceOut,
+            curve: Curves.decelerate,
           );
         },
         items: const [
@@ -90,7 +89,7 @@ class _HomeState extends State<Home> {
           ),
           TabItem(
             isIconBlend: true,
-            title: "Profile",
+            title: "App Profile",
             icon: Icon(
               Icons.person,
               size: 24,

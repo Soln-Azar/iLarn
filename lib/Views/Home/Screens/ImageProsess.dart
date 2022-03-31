@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:ilearn/Global/constants.dart';
 import 'package:ilearn/Views/Home/Screens/Capture.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +15,7 @@ class ImageCropper extends StatefulWidget {
 
 class _ImageCropperState extends State<ImageCropper> {
   File? image;
-  
+
   final cropKey = GlobalKey<CropState>();
   File? _file;
   File? _sample;
@@ -47,7 +46,7 @@ class _ImageCropperState extends State<ImageCropper> {
     return Center(
       child: FloatingActionButton.extended(
         backgroundColor: kPrimaryColor,
-        label: const Text("Pick image"),
+        label: const Text("Choose image"),
         onPressed: () => showImageSettings(),
         icon: const Icon(
           Icons.camera,
@@ -60,8 +59,11 @@ class _ImageCropperState extends State<ImageCropper> {
     return Column(
       children: <Widget>[
         Expanded(
-          flex:2,
-          child: Crop.file(_sample!, key: cropKey,aspectRatio:1,),
+          flex: 2,
+          child: Crop.file(
+            _sample!,
+            key: cropKey,
+          ),
         ),
         Container(
           padding: const EdgeInsets.only(top: 20.0),
@@ -70,22 +72,19 @@ class _ImageCropperState extends State<ImageCropper> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               OutlinedButton(
-                style:ButtonStyle(
-                  foregroundColor:MaterialStateProperty.all(kPrimaryColor
-                  ),
-                  padding:MaterialStateProperty.all(const EdgeInsets.all(2)),
-                  fixedSize:MaterialStateProperty.all(const Size(200,50))
-                ),
+                style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(kPrimaryColor),
+                    padding: MaterialStateProperty.all(const EdgeInsets.all(2)),
+                    fixedSize: MaterialStateProperty.all(const Size(200, 50))),
                 child: Text(
                   'Crop Image',
-                  style: Theme.of(context)
-                      .textTheme
-                      .button!
-                      .copyWith(color: Colors.black,fontSize:19,),
+                  style: Theme.of(context).textTheme.button!.copyWith(
+                        color: Colors.black,
+                        fontSize: 19,
+                      ),
                 ),
                 onPressed: () => _cropImage(),
               ),
-  
             ],
           ),
         )
@@ -109,8 +108,6 @@ class _ImageCropperState extends State<ImageCropper> {
       _file = file;
     });
   }
-
-  
 
   /// capture image from camera
   Future<void> _captureImage() async {
@@ -143,9 +140,10 @@ class _ImageCropperState extends State<ImageCropper> {
 
     // scale up to use maximum possible number of pixels
     // this will sample image in higher resolution to make cropped image larger
+
     final sample = await ImageCrop.sampleImage(
       file: _file!,
-      preferredSize: (2000 / scale).round(),
+      preferredSize: (1000 / scale).round(),
     );
 
     final file = await ImageCrop.cropImage(
@@ -157,6 +155,7 @@ class _ImageCropperState extends State<ImageCropper> {
 
     _lastCropped?.delete();
     _lastCropped = file;
+    // ignore: unnecessary_null_comparison
     if (file != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
