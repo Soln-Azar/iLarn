@@ -22,6 +22,7 @@ class iLearn extends StatelessWidget {
     Auth user = Auth();
     return MaterialApp(
       theme: ThemeData(
+        
         primarySwatch: Colors.teal,
       ),
       home: user.isSignedIn() ? const IntroPage() : const Home(),
